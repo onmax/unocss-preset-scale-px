@@ -1,65 +1,22 @@
 import { definePreset } from '@unocss/core'
 
-export interface StarterOptions {
-  /**
-   *  The number of columns in the grid system (Example option)
-   *
-   * @default 12
-   */
-  span?: number
+export interface PresetScalePxOptions {
 }
 
-export const presetStarter = definePreset((_options: StarterOptions = {}) => {
-  const span = _options.span ?? 12
+const remRE = /(-?[.\d]+)rem/g
 
+export const presetScalePx = definePreset((_options: PresetScalePxOptions = {}) => {
   return {
-    name: 'unocss-preset-starter',
+    name: 'unocss-preset-scale-px',
+    postprocess: (util) => {
+      if (!util.entries || typeof util.entries.forEach !== 'function')
+        return
 
-    theme: {
-      // Customize your theme here
-    },
-
-    // Customize your preset here
-    rules: [
-      ['custom-rule', { color: 'red' }],
-      [
-        /col-(\d+)/,
-        ([_, s]) => ({ width: `calc(${s} / ${span} * 100%)` }),
-        { autocomplete: 'col-<span>' },
-      ],
-    ],
-
-    // Customize your variants here
-    variants: [
-      {
-        name: '@active',
-        match(matcher) {
-          if (!matcher.startsWith('@active'))
-            return matcher
-
-          return {
-            matcher: matcher.slice(8),
-            selector: s => `${s}.active`,
-          }
-        },
-      },
-    ],
-
-    // You can also define built-in presets
-    presets: [
-      // ...
-    ],
-
-    // You can also define built-in transformers
-    transformers: [
-      // ...
-    ],
-
-    // Customize AutoComplete
-    autocomplete: {
-      shorthands: {
-        span: Array.from({ length: span }, (_, i) => `${i + 1}`),
-      },
+      util.entries?.forEach((i) => {
+        const value = i[1]
+        if (typeof value === 'string' && remRE.test(value))
+          i[1] = value.replace(remRE, (_, p1) => `${p1 / 4}rem`)
+      })
     },
   }
 })
