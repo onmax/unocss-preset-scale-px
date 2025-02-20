@@ -1,7 +1,7 @@
 {
   "name": "unocss-preset-scale-px",
   "type": "module",
-  "version": "0.0.1",
+  "version": "0.0.2",
   "packageManager": "pnpm@10.4.1",
   "description": "A UnoCSS preset that maps utility numbers directly to pixel values (e.g., p-4 → 4px)",
   "author": "onmax",
