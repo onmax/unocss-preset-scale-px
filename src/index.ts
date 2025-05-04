@@ -1,3 +1,11 @@
+// ****************** Warning ******************
+//
+// The code of this library has been moved to https://github.com/onmax/unocss-preset-onmax/tree/main/packages/unocss-preset-scale-px
+// Please use the new package instead.
+// ***********************************************
+
+// Old code
+
 import { definePreset } from '@unocss/core'
 
 export interface PresetScalePxOptions {
